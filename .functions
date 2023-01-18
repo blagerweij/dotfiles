@@ -1,0 +1,49 @@
+function awssh() {
+  ssh -F ~/.ssh/awsconfig `aws ec2 describe-instances --filters Name=tag:Name,Values=$1 Name=instance-state-name,Values=running --query 'Reservations[].Instances[].[PublicIpAddress]' --output text --region ap-southeast-1 --profile carepayaws | head -1`
+}
+
+function awsshi() {
+  ssh -F ~/.ssh/awsconfig `aws ec2 describe-instances --instance-ids $1 --query 'Reservations[].Instances[].[PublicIpAddress]' --output text --region ap-southeast-1 --profile carepayaws | head -1`
+}
+
+function k8cfg() {
+  export AWS_SDK_LOAD_CONFIG=1
+  export AWS_PROFILE=$1
+  aws --no-cli-pager sts get-caller-identity || aws sso login
+  aws eks update-kubeconfig --name $2 --alias $2
+}
+
+function awsip() {
+  aws ec2 describe-instances --filters Name=tag:Name,Values=$1 Name=instance-state-name,Values=running --query 'Reservations[].Instances[].[PublicIpAddress]' --output text --region ap-southeast-1 --profile carepayaws
+}
+
+function k8l() { 
+  kubectl logs "$(kubectl get pods -l app=$1 --field-selector=status.phase=Running -o jsonpath='{.items[0].metadata.name}')" 
+}
+
+function k8r() { 
+  kubectl delete pod "$(kubectl get pods -l app=$1 --field-selector=status.phase=Running -o jsonpath='{.items[0].metadata.name}')" 
+}
+
+function iamysql() {
+  mysql --ssl-mode=REQUIRED -u $2 -h $1 -p$(aws rds generate-db-auth-token --hostname $1 --port 3306 --user $2) --enable-cleartext-plugin --protocol=tcp $3
+}
+
+function iamysqldump() {
+  mysqldump --column-statistics=0 --ssl-mode=REQUIRED -u $2 -h $1 -p$(aws rds generate-db-auth-token --hostname $1 --port 3306 --user $2 --profile carepayaws --region ap-southeast-1) --enable-cleartext-plugin --protocol=tcp --databases $3 $4 $5 $6 $7 $8 $9
+}
+
+function iamrds() {
+  aws rds generate-db-auth-token --hostname $1 --port 3306 --user $2 --profile carepayaws --region ap-southeast-1
+}
+
+function git-crypt-unlock {
+  if [[ ! -d .terraform/modules ]]; then
+    echo "No modules found, please run terraform init"
+  else
+    for module in .terraform/modules/*; do
+      echo "Unlocking ${module}"
+      (cd ${module} && git-crypt unlock ~/Documents/Keys/git-crypt-key)
+    done
+  fi
+}
