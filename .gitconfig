@@ -15,7 +15,7 @@
         co = checkout
         cob = checkout -b
         del = branch -D
-        s = status
+        st = status
         br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
         undo = reset HEAD~1 --mixed
 	ahead = log --stat --oneline @{u}..
