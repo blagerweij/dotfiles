@@ -7,4 +7,4 @@
 /Applications/IntelliJ\ IDEA.app/Contents/MacOS/idea installPlugins org.mapstruct.intellij
 /Applications/IntelliJ\ IDEA.app/Contents/MacOS/idea installPlugins "PlantUML integration"
 /Applications/IntelliJ\ IDEA.app/Contents/MacOS/idea installPlugins org.sonarlint.idea
-/Applications/IntelliJ\ IDEA.app/Contents/MacOS/idea installPluginsorg.intellij.plugins.hcl
+/Applications/IntelliJ\ IDEA.app/Contents/MacOS/idea installPlugins org.intellij.plugins.hcl
