@@ -38,11 +38,11 @@ After you've executed the setup any file within the $HOME folder can be versione
 
 If you already store your configuration/dotfiles in a Git repository, on a new system you can migrate to this setup with the following steps:
 
-Now clone your dotfiles into a bare repository in a "dot" folder of your $HOME:
+First clone your dotfiles into a bare repository in a "dot" folder of your $HOME:
 
     git clone --bare <git-repo-url> $HOME/.myconfig
 
-Checkout the actual content from the bare repository to your $HOME:
+Now checkout the actual content from the bare repository to your $HOME:
 
     git --git-dir=$HOME/.myconfig --work-tree=$HOME checkout
 
@@ -68,4 +68,26 @@ You're done, from now on you can now type config commands to add and update your
     config add .bashrc
     config commit -m "Add bashrc"
     config push
+
+## Homebrew
+
+Homebrew is a very convenient package manager for MacOS. On a fresh machine, you'll need to install Homebrew first:
+
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+Then, you can install all packages using the `Brewfile` bundle stored in the .bin folder:
+
+    brew bundle install
+
+## Visual Studio Code extensions
+
+After installing the Homebrew bundle, you should have Visual Studio Code installed. Now you can install all your favorite extensions. Thera are two options:
+1) Enable `Settings Sync` in VSCode
+2) Install all extensions from the `.vscode/extensions.json` file: From your home directory, run `code .`, then install all workspace recommendations.
+
+## IntelliJ
+
+For Jetbrains IntelliJ IDEA, things work similar: You can either use your Jetbrains account to sync settings (including plugins), or you can use the shell script in the .bin folder:
+
+    .bin/install-idea.sh
 

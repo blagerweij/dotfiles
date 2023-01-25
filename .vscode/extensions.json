@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "eamodio.gitlens",
+        "GitHub.copilot",
+        "ms-kubernetes-tools.vscode-kubernetes-tools"
+    ]
+}
