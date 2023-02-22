@@ -47,3 +47,17 @@ function git-crypt-unlock {
     done
   fi
 }
+
+function listPublicIps {
+  for profile in int-prod cp-aws ke-test ke-acc ke-prod ng-acc ng-prod ae-test ae-acc ae-prod; do
+    echo "\"$profile\": {"
+    for region in eu-west-1 me-central-1 ap-southeast-1; do
+      echo "\"$region\": {"
+      echo "\"load-balancers\": ["
+      aws --profile $profile --region $region elbv2 describe-load-balancers --output json | jq 'LoadBalancers[].AvailabilityZones[].LoadBalancerAddresses[].IpAddress'
+      echo "]"
+    done
+    echo "}"
+  done
+  echo "}"
+}
