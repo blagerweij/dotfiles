@@ -1,3 +1,5 @@
+alias pip=pip3
+alias python=python3
 alias dcu="docker compose up -d"
 alias dcd="docker compose down"
 export GIT_CRYPT_KEY=~/dev/carepay/ssi-platform-modules/.git/git-crypt/keys/default
