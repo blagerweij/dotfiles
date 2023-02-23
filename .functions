@@ -10,8 +10,7 @@ function k8cfg() {
   export AWS_SDK_LOAD_CONFIG=1
   export AWS_PROFILE=$1
   aws --no-cli-pager sts get-caller-identity || aws sso login
-  aws eks update-kubeconfig --name $2 --alias $2
-}
+  aws eks update-kubeconfig --name $2 --alias $2 }
 
 function awsip() {
   aws ec2 describe-instances --filters Name=tag:Name,Values=$1 Name=instance-state-name,Values=running --query 'Reservations[].Instances[].[PublicIpAddress]' --output text --region ap-southeast-1 --profile carepayaws
@@ -49,15 +48,46 @@ function git-crypt-unlock {
 }
 
 function listPublicIps {
-  for profile in int-prod cp-aws ke-test ke-acc ke-prod ng-acc ng-prod ae-test ae-acc ae-prod; do
+  for profile in cp-int cp-aws ke-test ke-acc ke-prod ng-acc ng-prod ae-test ae-acc; do
     echo "\"$profile\": {"
-    for region in eu-west-1 me-central-1 ap-southeast-1; do
+    for region in eu-west-1 ap-southeast-1; do
       echo "\"$region\": {"
-      echo "\"load-balancers\": ["
-      aws --profile $profile --region $region elbv2 describe-load-balancers --output json | jq 'LoadBalancers[].AvailabilityZones[].LoadBalancerAddresses[].IpAddress'
-      echo "]"
+      echo -n "\"load-balancers\": "
+      aws --profile $profile --region $region elbv2 describe-load-balancers --output json | jq '[.LoadBalancers[].AvailabilityZones[].LoadBalancerAddresses[].IpAddress]'
+      echo -n "\"ec2-instances\": "
+      aws --profile $profile --region $region ec2 describe-instances --output json | jq '[.Reservations[].Instances[] | select(.PublicIpAddress) | .PublicIpAddress]'
+      echo -n "\"rds\": "
+      aws --profile $profile --region $region rds describe-db-instances --output json | jq '[.DBInstances[].Endpoint.Address]'
+      echo -n "\"network-interfaces\": "
+      aws --profile $profile --region $region ec2 describe-network-interfaces --output json | jq '[.NetworkInterfaces[] | select(.Association.PublicIp) | .Association.PublicIp]'
     done
     echo "}"
   done
   echo "}"
+}
+
+function k8tunnel () {
+  set -e
+  host=$1
+  sport=$(echo $2 | cut -d ":" -f1)
+  dport=$(echo $2 | cut -d ":" -f2)
+  suffix=$(openssl rand -hex 3)
+  trap "kubectl delete pod forwarder-$suffix" SIGINT SIGTERM EXIT
+  kubectl create -f - <<EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: forwarder-$suffix
+  labels:
+    run : forwarder-$suffix
+spec:
+  containers:
+    - name: forwarder
+      image: alpine/socat:latest
+      args:
+        - TCP4-LISTEN:${dport},fork,reuseaddr
+        - TCP:${host}:${dport}
+EOF
+  kubectl wait --for=condition=Ready pod/forwarder-$suffix 2>&1 >/dev/null
+  kubectl port-forward pod/forwarder-$suffix $sport:$dport
 }
