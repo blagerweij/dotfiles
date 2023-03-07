@@ -37,5 +37,5 @@ alias dbaetest="aws --region eu-west-1 --profile deploy_ae_test secretsmanager g
 alias dbaeacc="aws --region eu-west-1 --profile deploy_ae_acc secretsmanager get-secret-value --secret-id /cp-ae-acc/shared-db-root/secret | jq -r .SecretString | jq -r .password"
 
 # alias git-crypt-unlock='GIT_CRYPT_KEY=~/dev/ssi-platform-modules/.git/git-crypt/keys/default ~/cp-terraform'
-alias myconfig='/usr/local/bin/git --git-dir=$HOME/.myconfig/ --work-tree=$HOME'
+alias dot='/usr/local/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
