@@ -9,29 +9,29 @@ Why ? No extra tooling, no symlinks, files are tracked on a version control syst
 - git
 - curl
 
-The technique consists in storing a Git bare repository in a "side" folder (like `$HOME/.myconfig`) using a specially crafted alias so that commands are run against that repository and not the usual .git local folder, which would interfere with any other Git repositories around.
+The technique consists in storing a Git bare repository in a "side" folder (like `$HOME/.dotfiles`) using a specially crafted alias so that commands are run against that repository and not the usual .git local folder, which would interfere with any other Git repositories around.
 
 ## Starting from scratch
 
 If you haven't been tracking your configurations in a Git repository before, you can start using this technique easily with these lines:
 
-    git init --bare $HOME/.myconfig
-    alias myconfig='/usr/bin/git --git-dir=$HOME/.myconfig/ --work-tree=$HOME'
-    myconfig config --local status.showUntrackedFiles no
+    git init --bare $HOME/.dotfiles
+    alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+    dot config --local status.showUntrackedFiles no
 
-The first line creates a folder `~/.myconfig` which is a Git bare repository that will track our files.
-Then we create an alias `myconfig` which we will use instead of the regular git when we want to interact with our configuration repository.
-We set a flag `--local` to the repository - to hide files we are not explicitly tracking yet. This is so that when you type `myconfig status` and other commands later, files you are not interested in tracking will not show up as untracked.
+The first line creates a folder `~/.dotfiles` which is a Git bare repository that will track our files.
+Then we create an alias `dot` which we will use instead of the regular git when we want to interact with our configuration repository.
+We set a flag `--local` to the repository - to hide files we are not explicitly tracking yet. This is so that when you type `dot status` and other commands later, files you are not interested in tracking will not show up as untracked.
 Also you can add the alias definition by hand to your .bashrc or use the the fourth line provided for convenience.
 
-After you've executed the setup any file within the $HOME folder can be versioned with normal commands, replacing git with your newly created `myconfig` alias, like:
+After you've executed the setup any file within the $HOME folder can be versioned with normal commands, replacing git with your newly created `dot` alias, like:
 
-    myconfig status
-    myconfig add .vimrc
-    myconfig commit -m "Add vimrc"
-    myconfig add .bashrc
-    myconfig commit -m "Add bashrc"
-    myconfig push
+    dot status
+    dot add .vimrc
+    dot commit -m "Add vimrc"
+    dot add .bashrc
+    dot commit -m "Add bashrc"
+    dot push
 
 ## Install your dotfiles onto a new system (or migrate to this setup)
 
@@ -39,10 +39,10 @@ If you already store your configuration/dotfiles in a Git repository, on a new s
 
 First clone your dotfiles into a bare repository in a "dot" folder of your $HOME, then checkout the actual content from the bare repository to your $HOME:
 
-    git clone --bare <git-repo-url> $HOME/.myconfig
-    alias myconfig='/usr/bin/git --git-dir=$HOME/.myconfig/ --work-tree=$HOME'
-    myconfig config --local status.showUntrackedFiles no
-    myconfig checkout
+    git clone --bare <git-repo-url> $HOME/.dotfiles
+    alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+    dot config --local status.showUntrackedFiles no
+    dot checkout
 
 The step above might fail with a message like:
 
@@ -53,16 +53,24 @@ The step above might fail with a message like:
     Aborting
 
 This is because your $HOME folder might already have some stock configuration files which would be overwritten by Git. The solution is simple: back up the files if you care about them, remove them if you don't care.
-Then retry `myconfig checkout` until all local files are resolved.
+Then retry `dot checkout` until all local files are resolved.
 
-You're done, from now on you can now type myconfig commands to add and update your dotfiles:
+You're done, from now on you can now type `dot` commands to add and update your dotfiles:
 
-    myconfig status
-    myconfig add .vimrc
-    myconfig commit -m "Add vimrc"
-    myconfig add .bashrc
-    myconfig commit -m "Add bashrc"
-    myconfig push
+    dot status
+    dot add .vimrc
+    dot commit -m "Add vimrc"
+    dot add .bashrc
+    dot commit -m "Add bashrc"
+    dot push
+
+## Encrypting sensitive files
+
+Some files might contain passwords or other sensitive data. You can encrypt them using `git-crypt`:
+
+    dot crypt unlock
+
+Update the .gitattributes file in your home-dir to specify which files require encryption.
 
 ## Homebrew
 
