@@ -94,3 +94,12 @@ For Jetbrains IntelliJ IDEA, things work similar: You can either use your Jetbra
 
     .bin/install-idea.sh
 
+## NPM
+
+To get a list of globally installed NPM packages, use the following command:
+
+    npm list -g --depth=0 --json > npm-global-package.json
+
+Then on a new machine, use the following command to install them again:
+
+    npm install -g $(jq -r '.dependencies | keys | join("\n")' npm-global-package.json | sed '/npm/d;/corepack/d')

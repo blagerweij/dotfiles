@@ -8,7 +8,7 @@ brew "coreutils"
 brew "direnv"
 brew "dive"
 brew "docker-credential-helper-ecr"
-brew "git"
+brew "git", link: false
 brew "git-crypt"
 brew "gnupg"
 brew "go"

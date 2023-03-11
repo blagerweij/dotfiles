@@ -1,1 +1,2 @@
 .gradle/gradle.properties filter=git-crypt diff=git-crypt
+.aws/credentials filter=git-crypt diff=git-crypt
