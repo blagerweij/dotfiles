@@ -2,7 +2,8 @@
 	name = "Barry Lagerweij"
 	email = b.lagerweij@carepay.com
         jira-api-token = ***REMOVED***
-        signingkey = B7DA9E39
+#        signingkey = B7DA9E39
+        signingkey = 3C848DB5
 
 [push]
 	default = simple

@@ -1,0 +1,8 @@
+aws.toolkit
+CheckStyle-IDEA
+com.github.copilot
+org.jetbrains.plugins.go
+org.mapstruct.intellij
+"PlantUML integration"
+org.sonarlint.idea
+org.intellij.plugins.hcl

@@ -1,0 +1,25 @@
+{
+  "name": "lib",
+  "dependencies": {
+    "@apidevtools/swagger-cli": {
+      "version": "4.0.4",
+      "overridden": false
+    },
+    "@stoplight/spectral-cli": {
+      "version": "6.6.0",
+      "overridden": false
+    },
+    "corepack": {
+      "version": "0.17.0",
+      "overridden": false
+    },
+    "npm": {
+      "version": "9.6.1",
+      "overridden": false
+    },
+    "openapi-to-graphql-cli": {
+      "version": "3.0.5",
+      "overridden": false
+    }
+  }
+}
