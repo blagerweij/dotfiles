@@ -88,7 +88,7 @@ source ~/.functions
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-export PATH=/usr/local/opt/node@8/bin:$PATH
+export PATH=/usr/local/opt/node@8/bin:$HOME/.docker/bin:$PATH
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
