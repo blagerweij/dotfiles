@@ -3,6 +3,7 @@ alias python=python3
 alias dcu="docker compose up -d"
 alias dcd="docker compose down"
 export GIT_CRYPT_KEY=~/dev/carepay/ssi-platform-modules/.git/git-crypt/keys/default
+
 alias awsclear='unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN'
 alias cpint="k8cfg 456480488550_AdministratorAccess cp-int-prod-eks-3"
 alias cpaetest="k8cfg 578675666392_AdministratorAccess cp-ae-test-eks-2"
