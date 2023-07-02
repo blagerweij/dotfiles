@@ -8,8 +8,8 @@ alias awsclear='unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN'
 alias cpint="k8cfg 456480488550_AdministratorAccess cp-int-prod-eks-3"
 alias cpaetest="k8cfg 578675666392_AdministratorAccess cp-ae-test-eks-2"
 alias cpaeacc="k8cfg 427893637246_AdministratorAccess cp-ae-acc-eks-2"
-alias cpaeuat="k8cfg 448677502697_AdministratorAccess cp-ae-uat-eks-2"
-alias cpaeuatme="k8cfg 145980250402_AdministratorAccess cp-ae-uatme-eks-2"
+alias cpaeuat="k8cfg 088610300590_AdministratorAccess cp-ae-uat-eks-2 me-central-1"
+alias cpaee2e="k8cfg 640664663532_AdministratorAccess cp-ae-e2e-eks-2"
 alias cpketest="k8cfg 272942068046_AdministratorAccess cp-ke-test-eks-3"
 alias cpngtest="k8cfg 272942068046_AdministratorAccess cp-ng-test-eks-4"
 alias cpaws="export AWS_PROFILE=801942499176_AdministratorAccess"
@@ -30,6 +30,7 @@ alias cpaws="export AWS_PROFILE=cp-aws"
 alias j8="export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)"
 alias j11="export JAVA_HOME=$(/usr/libexec/java_home -v 11)"
 alias j17="export JAVA_HOME=$(/usr/libexec/java_home -v 17)"
+alias graalvm17="export JAVA_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-java17-22.3.1/Contents/Home"
 alias dbketest="aws --region eu-west-1 --profile deploy_ke_test secretsmanager get-secret-value --secret-id /cp-ke-test/shared-db-root/secret | jq -r .SecretString | jq -r .password"
 alias dbkeprod="aws --region eu-west-1 --profile deploy_ke_prod secretsmanager get-secret-value --secret-id /cp-ke-prod/shared-db-root/secret | jq -r .SecretString | jq -r .password"
 alias dbkeacc="aws --region eu-west-1 --profile deploy_ke_acc secretsmanager get-secret-value --secret-id /cp-ke-acc/shared-db-root/secret | jq -r .SecretString | jq -r .password"
@@ -39,7 +40,8 @@ alias dbngprod="aws --region eu-west-1 --profile deploy_ng_prod secretsmanager g
 alias dbcalc="aws --region ap-southeast-1 --profile deploy_ke_legacy secretsmanager get-secret-value --secret-id /cp-calc-prod/root/secret | jq -r .SecretString | jq -r .password"
 alias dbaetest="aws --region eu-west-1 --profile deploy_ae_test secretsmanager get-secret-value --secret-id /cp-ae-test/shared-db-root/secret | jq -r .SecretString | jq -r .password"
 alias dbaeacc="aws --region eu-west-1 --profile deploy_ae_acc secretsmanager get-secret-value --secret-id /cp-ae-acc/shared-db-root/secret | jq -r .SecretString | jq -r .password"
-alias dbaeuat="aws --region eu-west-1 --profile deploy_ae_uat secretsmanager get-secret-value --secret-id /cp-ae-uatcc/shared-db-root/secret | jq -r .SecretString | jq -r .password"
+alias dbaeuat="aws --region me-central-1 --profile deploy_ae_uat secretsmanager get-secret-value --secret-id /cp-ae-uat/shared-db-root/secret | jq -r .SecretString | jq -r .password"
+alias dbaee2e="aws --region eu-west-1 --profile deploy_ae_e2e secretsmanager get-secret-value --secret-id /cp-ae-e2e/shared-db-root/secret | jq -r .SecretString | jq -r .password"
 
 # alias git-crypt-unlock='GIT_CRYPT_KEY=~/dev/ssi-platform-modules/.git/git-crypt/keys/default ~/cp-terraform'
 alias dot='/usr/local/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
