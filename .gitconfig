@@ -1,33 +1,33 @@
 [user]
-	name = "Barry Lagerweij"
-	email = b.lagerweij@carepay.com
-        jira-api-token = ***REMOVED***
+    name = "Barry Lagerweij"
+    email = b.lagerweij@carepay.com
+    jira-api-token = ***REMOVED***
 #        signingkey = B7DA9E39
 #        signingkey = 3C848DB5
 
 [push]
-	default = simple
+    default = simple
+    autoSetupRemote = true
 
 [core]
-	filemode = false
-	autocrlf = input
+    filemode = false
+    autocrlf = input
 
 [color]
-	ui = auto
+    ui = auto
 
 [branch]
-	autosetupmerge = true
+    autosetupmerge = true
 
 [alias]
-        co = checkout
-        cob = checkout -b
-        del = branch -D
-        st = status
-        br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
-        undo = reset HEAD~1 --mixed
-	ahead = log --stat --oneline @{u}..
-        up = pull --rebase --prune --autostash
-        pu = ![[ $(git config branch.$(git symbolic-ref --short HEAD).merge) = '' ]] && git push -u origin $(git symbolic-ref --short HEAD) || git push
+    co = checkout
+    cob = checkout -b
+    del = branch -D
+    st = status
+    br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+    undo = reset HEAD~1 --mixed
+    ahead = log --stat --oneline @{u}..
+    up = pull --rebase --prune --autostash
 
 #[commit]
 #	gpgsign = true
