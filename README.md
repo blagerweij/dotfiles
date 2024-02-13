@@ -37,6 +37,10 @@ After you've executed the setup any file within the $HOME folder can be versione
 
 If you already store your configuration/dotfiles in a Git repository, on a new system you can migrate to this setup with the following steps:
 
+* Install xcode command line tools
+* Install homebrew
+* Goto bitwarden to grab your private key, save in .ssh
+
 First clone your dotfiles into a bare repository in a "dot" folder of your $HOME, then checkout the actual content from the bare repository to your $HOME:
 
     git clone --bare <git-repo-url> $HOME/.dotfiles
