@@ -35,16 +35,26 @@ After you've executed the setup any file within the $HOME folder can be versione
 
 ## Install your dotfiles onto a new system (or migrate to this setup)
 
-If you already store your configuration/dotfiles in a Git repository, on a new system you can migrate to this setup with the following steps:
+If you have stored your configuration/dotfiles in a Git repository, and want to migrate to a new system, you can setup with the following steps:
 
-* Install xcode command line tools
-* Install homebrew
-* Goto bitwarden to grab your private key, save in .ssh
+### Install homebrew
+
+Homebrew is a very convenient package manager for MacOS. On a fresh machine, you'll need to install Homebrew first:
+
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+This step should also install the XCode Command Line Tools, which includes Git. You'll need Git installed for the next steps.
+
+### Setup your private key
+
+Goto the website of the password manager of your choice (e.g. bitwarden.com) to grab your private key, save in .ssh
+
+### Clone your dotfiles
 
 First clone your dotfiles into a bare repository in a "dot" folder of your $HOME, then checkout the actual content from the bare repository to your $HOME:
 
     git clone --bare <git-repo-url> $HOME/.dotfiles
-    alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+    alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
     dot config --local status.showUntrackedFiles no
     dot checkout
 
@@ -56,7 +66,7 @@ The step above might fail with a message like:
     Please move or remove them before you can switch branches.
     Aborting
 
-This is because your $HOME folder might already have some stock configuration files which would be overwritten by Git. The solution is simple: back up the files if you care about them, remove them if you don't care.
+This is because your $HOME folder might already have some stock configuration files which would be overwritten by Git. The solution is simple: back up (move) the files if you care about them, remove them if you don't care.
 Then retry `dot checkout` until all local files are resolved.
 
 You're done, from now on you can now type `dot` commands to add and update your dotfiles:
