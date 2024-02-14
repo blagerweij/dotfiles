@@ -45,15 +45,22 @@ Homebrew is a very convenient package manager for MacOS. On a fresh machine, you
 
 This step should also install the XCode Command Line Tools, which includes Git. You'll need Git installed for the next steps.
 
-### Setup your private key
+### Install oh-my-zsh
 
-Goto the website of the password manager of your choice (e.g. bitwarden.com) to grab your private key, save in .ssh
+This step is optional, but is required if you're using Oh-My-Zsh. It's not installed using Homebrew, so you'll need to install this manually:
+
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+### Setup your SSH private key
+
+If you want to copy your private key from your old machine, then goto the website of the password manager of your choice (e.g. bitwarden.com) to grab your private key, save in .ssh
+Alternatively, you can create a new keypair, and configure the private key in your Git repository. You'll need to have a properly configured Git client, so you can clone the dotfiles repository.
 
 ### Clone your dotfiles
 
-First clone your dotfiles into a bare repository in a "dot" folder of your $HOME, then checkout the actual content from the bare repository to your $HOME:
+First clone your dotfiles into a bare repository in a "dotfiles" folder of your $HOME, then checkout the actual content from the bare repository to your $HOME: (the git repository url is an example)
 
-    git clone --bare <git-repo-url> $HOME/.dotfiles
+    git clone --bare git@github.com:blagerweij/dotfiles $HOME/.dotfiles
     alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
     dot config --local status.showUntrackedFiles no
     dot checkout
@@ -66,7 +73,7 @@ The step above might fail with a message like:
     Please move or remove them before you can switch branches.
     Aborting
 
-This is because your $HOME folder might already have some stock configuration files which would be overwritten by Git. The solution is simple: back up (move) the files if you care about them, remove them if you don't care.
+This is because your $HOME folder might already have some stock configuration files which would be overwritten by Git. The solution is simple: back up (move) the files if you care about them, or remove them if you don't care.
 Then retry `dot checkout` until all local files are resolved.
 
 You're done, from now on you can now type `dot` commands to add and update your dotfiles:
@@ -86,13 +93,9 @@ Some files might contain passwords or other sensitive data. You can encrypt them
 
 Update the .gitattributes file in your home-dir to specify which files require encryption.
 
-## Homebrew
+## Install all software packages
 
-Homebrew is a very convenient package manager for MacOS. On a fresh machine, you'll need to install Homebrew first:
-
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-Then, you can install all packages using the `Brewfile` bundle stored in the .bin folder:
+Remember Homebrew, the very convenient package manager for MacOS ? On a fresh machine, you can install all software stored in the 'Brewfile' :
 
     brew bundle install
 
@@ -117,3 +120,8 @@ To get a list of globally installed NPM packages, use the following command:
 Then on a new machine, use the following command to install them again:
 
     npm install -g $(jq -r '.dependencies | keys | join("\n")' npm-global-package.json | sed '/npm/d;/corepack/d')
+
+## The end
+
+Enjoy your new setup !
+
