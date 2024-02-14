@@ -91,7 +91,9 @@ Some files might contain passwords or other sensitive data. You can encrypt them
 
     dot crypt unlock
 
-Update the .gitattributes file in your home-dir to specify which files require encryption.
+You'll want to configure the GPG keystore first on your new machine. See https://github.com/AGWA/git-crypt for details.
+
+To add sensitive files, Update the .gitattributes file in your home-dir to specify which files require encryption.
 
 ## Install all software packages
 
