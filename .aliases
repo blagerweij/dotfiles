@@ -12,6 +12,7 @@ alias cpaeuat="k8cfg 088610300590_AdministratorAccess cp-ae-uat-eks-2 me-central
 alias cpaee2e="k8cfg 640664663532_AdministratorAccess cp-ae-e2e-eks-2"
 alias cpketest="k8cfg 272942068046_AdministratorAccess cp-ke-test-eks-3"
 alias cpkentest="k8cfg 093469077649_AdministratorAccess cp-ken-test-eks-2"
+alias cpkenacc="k8cfg 533267425922_AdministratorAccess cp-ken-acc-eks-2"
 alias cpngtest="k8cfg 272942068046_AdministratorAccess cp-ng-test-eks-4"
 alias cpaws="export AWS_PROFILE=801942499176_AdministratorAccess"
 alias cpnllab="k8cfg 272942068046_AdministratorAccess cp-nl-lab-eks-2"
