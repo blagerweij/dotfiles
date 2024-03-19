@@ -33,11 +33,10 @@ alias cpaws="export AWS_PROFILE=cp-aws"
 alias kx="kubectx"
 alias kn="kubens"
 
-alias j8="export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)"
-alias j11="export JAVA_HOME=$(/usr/libexec/java_home -v 11)"
-alias j17="export JAVA_HOME=$(/usr/libexec/java_home -v 17)"
-alias j21="export JAVA_HOME=$(/usr/libexec/java_home -v 21)"
-alias graalvm17="export JAVA_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-java17-22.3.1/Contents/Home"
+alias j8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
+alias j11='export JAVA_HOME=$(/usr/libexec/java_home -v 11)'
+alias j17='export JAVA_HOME=$(/usr/libexec/java_home -v 17)'
+alias j21='export JAVA_HOME=$(/usr/libexec/java_home -v 21)'
 
 alias dbketest="aws --region eu-west-1 --profile deploy_ke_test secretsmanager get-secret-value --secret-id /cp-ke-test/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
 alias dbkeprod="aws --region eu-west-1 --profile deploy_ke_prod secretsmanager get-secret-value --secret-id /cp-ke-prod/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
@@ -55,4 +54,4 @@ alias dbkentest="aws --region eu-west-1 --profile deploy_ken_test secretsmanager
 
 # alias git-crypt-unlock='GIT_CRYPT_KEY=~/dev/ssi-platform-modules/.git/git-crypt/keys/default ~/cp-terraform'
 alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-# alias pvault='docker run --rm -i --add-host="host.docker.internal:host-gateway" -v ${pwd}:/pwd -w /pwd piiano/pvault-cli:1.2.2'
+alias pvault='docker run --rm -i --add-host="host.docker.internal:host-gateway" -v $(pwd):/pwd -w /pwd piiano/pvault-cli'

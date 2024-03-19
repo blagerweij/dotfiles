@@ -7,4 +7,16 @@ allprojects {
             logger.info("'stopContainers' property of 'dockerCompose' extension set to 'false' from 'init.gradle' script")
         }
     }
+    beforeEvaluate {
+        // hack to silence AWS SDK profile warnings
+        def ctx = org.slf4j.LoggerFactory.getILoggerFactory()
+        try {
+            def f = ctx.class.getDeclaredField('loggers')
+            f.setAccessible(true)
+            def loggers = f.get(ctx)
+            def noop = loggers['org.apache.http.headers']
+            loggers['com.amazonaws.auth.profile.internal.BasicProfileConfigLoader'] = noop
+            loggers['software.amazon.awssdk.profiles.internal.ProfileFileReader'] = noop
+        } catch (Exception e) {}
+    }
 }
