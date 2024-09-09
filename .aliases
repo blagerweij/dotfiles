@@ -13,6 +13,7 @@ alias cpaee2e="k8cfg 640664663532_AdministratorAccess cp-ae-e2e-eks-2"
 alias cpketest="k8cfg 272942068046_AdministratorAccess cp-ke-test-eks-3"
 alias cpkentest="k8cfg 093469077649_AdministratorAccess cp-ken-test-eks-2"
 alias cpkenacc="k8cfg 533267425922_AdministratorAccess cp-ken-acc-eks-2"
+alias cpkenprod="k8cfg 851725400099_AdministratorAccess cp-ken-prod-eks-2"
 alias cpngtest="k8cfg 272942068046_AdministratorAccess cp-ng-test-eks-4"
 alias cpaws="export AWS_PROFILE=801942499176_AdministratorAccess"
 alias cpnllab="k8cfg 272942068046_AdministratorAccess cp-nl-lab-eks-2"
@@ -51,7 +52,11 @@ alias dbaeuat="aws --region me-central-1 --profile deploy_ae_uat secretsmanager 
 alias dbaee2e="aws --region eu-west-1 --profile deploy_ae_e2e secretsmanager get-secret-value --secret-id /cp-ae-e2e/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
 alias dbaeprod="aws --region me-central-1 --profile deploy_ae_prod secretsmanager get-secret-value --secret-id /cp-ae-prod/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
 alias dbkentest="aws --region eu-west-1 --profile deploy_ken_test secretsmanager get-secret-value --secret-id /cp-ken-test/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
+alias dbkenacc="aws --region eu-west-1 --profile deploy_ken_acc secretsmanager get-secret-value --secret-id /cp-ken-acc/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
+alias dbkenprod="aws --region eu-west-1 --profile deploy_ken_prod secretsmanager get-secret-value --secret-id /cp-ken-prod/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
 
 # alias git-crypt-unlock='GIT_CRYPT_KEY=~/dev/ssi-platform-modules/.git/git-crypt/keys/default ~/cp-terraform'
 alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 alias pvault='docker run --rm -i --add-host="host.docker.internal:host-gateway" -v $(pwd):/pwd -w /pwd piiano/pvault-cli'
+
+alias vi=/opt/homebrew/bin/vi

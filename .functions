@@ -42,7 +42,7 @@ function git-crypt-unlock {
   else
     for module in .terraform/modules/*; do
       echo "Unlocking ${module}"
-      (cd ${module} && git-crypt unlock ~/Documents/Keys/git-crypt-key)
+      (cd ${module} && git-crypt unlock $GIT_CRYPT_KEY)
     done
   fi
 }
