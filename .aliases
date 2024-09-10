@@ -57,6 +57,8 @@ alias dbkenprod="aws --region eu-west-1 --profile deploy_ken_prod secretsmanager
 
 # alias git-crypt-unlock='GIT_CRYPT_KEY=~/dev/ssi-platform-modules/.git/git-crypt/keys/default ~/cp-terraform'
 alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-alias pvault='docker run --rm -i --add-host="host.docker.internal:host-gateway" -v $(pwd):/pwd -w /pwd piiano/pvault-cli'
+alias dotsecret='git --git-dir=$HOME/.secretfiles --work-tree=$HOME'
+# alias pvault='docker run --rm -i --add-host="host.docker.internal:host-gateway" -v $(pwd):/pwd -w /pwd piiano/pvault-cli'
 
+# Use homebrew vi, not the default MacOS one
 alias vi=/opt/homebrew/bin/vi
