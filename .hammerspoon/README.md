@@ -23,3 +23,21 @@ The following shortcuts are supported:
 ## Mouse
 - `shift + ctrl + ⌘  + D` - Show location of mouse
 
+## Time Machine
+Upon startup, the hammerspoon scripts will exclude some folders from Time Machine backup:
+- Downloads
+- Golang caches
+- Docker images and volumes
+- Gradle caches
+- Maven caches
+- NodeJS / NPM caches
+- Sonarqube caches
+- Visual Studio Code caches
+
+In addition, the time-machine.lua script will exclude 'build' folders:
+- Gradle
+- Python
+- NPM
+- Maven
+- Golang
+- Terraform
