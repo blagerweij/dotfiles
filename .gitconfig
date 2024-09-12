@@ -1,9 +1,6 @@
 [user]
     name = "Barry Lagerweij"
     email = b.lagerweij@carepay.com
-    jira-api-token = ***REMOVED***
-#        signingkey = B7DA9E39
-#        signingkey = 3C848DB5
 
 [push]
     default = simple
@@ -28,6 +25,3 @@
     undo = reset HEAD~1 --mixed
     ahead = log --stat --oneline @{u}..
     up = pull --rebase --prune --autostash
-
-#[commit]
-#	gpgsign = true
