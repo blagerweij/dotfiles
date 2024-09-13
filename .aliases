@@ -47,13 +47,19 @@ alias dbngacc="aws --region eu-west-1 --profile deploy_ng_acc secretsmanager get
 alias dbngprod="aws --region eu-west-1 --profile deploy_ng_prod secretsmanager get-secret-value --secret-id /cp-ng-prod/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
 alias dbcalc="aws --region ap-southeast-1 --profile deploy_ke_legacy secretsmanager get-secret-value --secret-id /cp-calc-prod/root/secret | jq -r .SecretString | jq -j .password | pbcopy"
 alias dbaetest="aws --region eu-west-1 --profile deploy_ae_test secretsmanager get-secret-value --secret-id /cp-ae-test/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
+alias dbaetestvault="aws --region eu-west-1 --profile deploy_ae_test secretsmanager get-secret-value --secret-id /cp-ae-test/vault/root-db-user | jq -r .SecretString | jq -j .dbPassword | pbcopy"
 alias dbaeacc="aws --region eu-west-1 --profile deploy_ae_acc secretsmanager get-secret-value --secret-id /cp-ae-acc/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
+alias dbaeaccvault="aws --region eu-west-1 --profile deploy_ae_acc secretsmanager get-secret-value --secret-id /cp-ae-acc/vault/root-db-user | jq -r .SecretString | jq -j .dbPassword | pbcopy"
 alias dbaeuat="aws --region me-central-1 --profile deploy_ae_uat secretsmanager get-secret-value --secret-id /cp-ae-uat/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbaee2e="aws --region eu-west-1 --profile deploy_ae_e2e secretsmanager get-secret-value --secret-id /cp-ae-e2e/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
+alias dbaeuatvault="aws --region eu-west-1 --profile deploy_ae_uat secretsmanager get-secret-value --secret-id /cp-ae-uat/vault/root-db-user | jq -r .SecretString | jq -j .dbPassword | pbcopy"
 alias dbaeprod="aws --region me-central-1 --profile deploy_ae_prod secretsmanager get-secret-value --secret-id /cp-ae-prod/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
+alias dbaeprodvault="aws --region eu-west-1 --profile deploy_ae_prod secretsmanager get-secret-value --secret-id /cp-ae-prod/vault/root-db-user | jq -r .SecretString | jq -j .dbPassword | pbcopy"
 alias dbkentest="aws --region eu-west-1 --profile deploy_ken_test secretsmanager get-secret-value --secret-id /cp-ken-test/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
+alias dbkentestvault="aws --region eu-west-1 --profile deploy_ken_test secretsmanager get-secret-value --secret-id /cp-ken-test/vault/root-db-user | jq -r .SecretString | jq -j .dbPassword | pbcopy"
 alias dbkenacc="aws --region eu-west-1 --profile deploy_ken_acc secretsmanager get-secret-value --secret-id /cp-ken-acc/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
+alias dbkenaccvault="aws --region eu-west-1 --profile deploy_ken_acc secretsmanager get-secret-value --secret-id /cp-ken-acc/vault/root-db-user | jq -r .SecretString | jq -j .dbPassword | pbcopy"
 alias dbkenprod="aws --region eu-west-1 --profile deploy_ken_prod secretsmanager get-secret-value --secret-id /cp-ken-prod/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
+alias dbkenprodvault="aws --region eu-west-1 --profile deploy_ken_prod secretsmanager get-secret-value --secret-id /cp-ken-prod/vault/root-db-user | jq -r .SecretString | jq -j .dbPassword | pbcopy"
 
 # alias git-crypt-unlock='GIT_CRYPT_KEY=~/dev/ssi-platform-modules/.git/git-crypt/keys/default ~/cp-terraform'
 alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'

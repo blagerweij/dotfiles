@@ -14,6 +14,7 @@ require("screenmanagement")
 require("spotlight")
 require("mouse")
 require("time-machine")
+require("zoom")
 
 hs.alert.show("Hammerspoon loaded")
 
