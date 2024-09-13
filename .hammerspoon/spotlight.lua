@@ -2,7 +2,6 @@
 --
 -- Alternative for Apple Spotlight
 --
-
 local fu = require("fileutils")
 local util = require("utils")
 local reloadApplication = { text = "Reload applications", uuid = "reload" }
@@ -75,8 +74,7 @@ function onCompletionHandler(result)
         chooseApplication:choices(initializeApplicationChoices())
     elseif result.idea then
         local exe = hs.application.pathForBundleID("com.jetbrains.intellij")
-        local t = hs.task.new(exe .. "/Contents/MacOS/idea", function(a,b,c) end, function(a,b,c) return false end, { result.uuid .. "/"  })
-        t:start()
+        io.popen("\"" .. exe .. "/Contents/MacOS/idea\" \"" .. result.uuid .. "\" &"):close()
     else
         hs.application.launchOrFocus(result.uuid)
     end

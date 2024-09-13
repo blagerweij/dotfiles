@@ -4,22 +4,9 @@ local mouseCircle = nil
 local mouseCircleTimer = nil
 local mouseCircleSize = 100
 
-local drawCircle = function()
-    local mousepoint = hs.mouse.getAbsolutePosition ()
-    if mouseCircle ~= nil then
-        mouseCircle:delete()
-    end
-    mouseCircle = hs.drawing.circle(hs.geometry.rect(mousepoint.x-mouseCircleSize, mousepoint.y-mouseCircleSize, mouseCircleSize*2, mouseCircleSize*2))
-    mouseCircle:setStrokeColor({["red"]=1,["blue"]=0,["green"]=0,["alpha"]=1})
-    mouseCircle:setFill(false)
-    mouseCircle:setStrokeWidth(25)
-    mouseCircle:show()
-    mouseCircle:hide(1)
-end
-
 function mouseFinder() 
     if mouseCircleSize > 0 then
-        drawCircle()
+        mouseCircle:appendElements({action="stroke", type="circle", radius=tostring(mouseCircleSize/220), reversePath=true, strokeColor={alpha=mouseCircleSize/100, red=1.0}, strokeWidth=10})
         mouseCircleSize = mouseCircleSize - 10
         mouseCircleTimer = hs.timer.doAfter(0.1, mouseFinder)
     else
@@ -29,14 +16,27 @@ function mouseFinder()
     end
 end
 
-hs.hotkey.bind({"cmd","alt","ctrl"}, "D", function() 
-    if mouseCircle then
-        mouseCircle:delete()
-        if mouseCircleTimer then
-            mouseCircleTimer:stop()
-        end
-    end
-    mouseCircleSize = 100
-    mouseFinder()
-end)
+local firstDown = 0
+local ctrlWasDown = false
 
+hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function(event)
+    local flags = event:getFlags()
+    local ctrlDown = flags["ctrl"]
+    if ctrlDown then
+        if not ctrlWasDown then
+            ctrlWasDown = true
+            local now = hs.timer.absoluteTime()
+            if firstDown + 500000000 > now and mouseCircle == nil then
+                local p = hs.mouse.absolutePosition()
+                mouseCircle = hs.canvas.new({x=p.x-200,y=p.y-200,w=400,h=400})
+                mouseCircleSize = 100
+                mouseFinder()
+                mouseCircle:show()
+            end
+            firstDown = now
+        end
+    else
+        ctrlWasDown = false
+    end
+    return false
+end):start()
