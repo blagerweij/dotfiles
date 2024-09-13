@@ -13,5 +13,7 @@ end
 -- Start screen sharing (even when Zoom is not the focused app)
 hs.hotkey.bind({"shift","cmd"}, "S", function()
     local app = hs.application.get("us.zoom.xos")
-    app:selectMenuItem("Start share")
+    if app ~= nil then
+        app:selectMenuItem("Start share")
+    end
 end)
