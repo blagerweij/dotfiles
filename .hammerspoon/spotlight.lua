@@ -50,11 +50,16 @@ function findIntellijProjects()
     end
     local recentProjectsFile = fu:read_file(path)
     for match in recentProjectsFile:gmatch "entry key=\".-\"" do
-        local projectLocation = string.gsub(string.gsub(match, "entry key=\"$USER_HOME%$", ""), "\"", "")
-        local projectName = string.gsub(projectLocation, projectLocation:match(".*/"), "")
+        local path = match:sub(12,-2)
+        if path:sub(1,11) == "$USER_HOME$" then
+            -- Replace HOMEDIR with actual path
+            path = os.getenv("HOME") .. path:sub(12)
+        end
+        local projectName = string.gsub(path, path:match(".*/"), "")
         table.insert(projects, {
-            text = "idea " .. projectName,
-            uuid = "idea " .. "~" .. projectLocation,
+            text = projectName,
+            uuid = path,
+            idea = true,
             image = hs.image.imageFromAppBundle("com.jetbrains.intellij")
         })
     end
@@ -68,16 +73,19 @@ function onCompletionHandler(result)
     end
     if result.uuid == reloadApplication.uuid then
         chooseApplication:choices(initializeApplicationChoices())
-    elseif result.uuid:find("idea ") == 1 then
-        fu:execute_command(result.uuid)
+    elseif result.idea then
+        local exe = hs.application.pathForBundleID("com.jetbrains.intellij")
+        local t = hs.task.new(exe .. "/Contents/MacOS/idea", function(a,b,c) end, function(a,b,c) return false end, { result.uuid .. "/"  })
+        t:start()
+    else
+        hs.application.launchOrFocus(result.uuid)
     end
-    hs.application.launchOrFocus(result.uuid)
 end
 
 chooseApplication = hs.chooser.new(onCompletionHandler)
                       :placeholderText("Search apps")
                       :choices(initializeApplicationChoices())
-                      :rows(4)
+                      :rows(10)
 
 hs.hotkey.bind(cah, "space", util:bind(chooseApplication, "show"))
 -- hs.hotkey.bind({ "cmd" }, "space", util:bind(chooseApplication, "show"))
