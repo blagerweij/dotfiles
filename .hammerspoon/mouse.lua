@@ -1,8 +1,8 @@
 -- Find my mouse pointer
 
-local mouseCircle = nil
-local mouseCircleTimer = nil
-local mouseCircleSize = 100
+mouseCircle = nil
+mouseCircleTimer = nil
+mouseCircleSize = 100
 
 function mouseFinder() 
     if mouseCircleSize > 0 then
@@ -16,10 +16,10 @@ function mouseFinder()
     end
 end
 
-local firstDown = 0
-local ctrlWasDown = false
+firstDown = 0
+ctrlWasDown = false
 
-hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function(event)
+tap = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function(event)
     local flags = event:getFlags()
     local ctrlDown = flags["ctrl"]
     if ctrlDown then
@@ -39,4 +39,5 @@ hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function(event)
         ctrlWasDown = false
     end
     return false
-end):start()
+end)
+tap:start()

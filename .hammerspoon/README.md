@@ -5,9 +5,9 @@ This is my .hammerspoon directory.
 The following shortcuts are supported:
 
 ## Window management:
-- `ctrl + ⌥ + ⌘  + Left`  - move window to the left
-- `ctrl + ⌥ + ⌘  + Right` - move window to the right
-- `ctrl + ⌥ + ⌘  + M` - toggle fullscreen mode
+- `ctrl + ⌥ + ⌘ + Left`  - move window to the left half of the screen
+- `ctrl + ⌥ + ⌘ + Right` - move window to the right half of the screen
+- `ctrl + ⌥ + Enter` - toggle fullscreen mode
 - `ctrl + ⌥ + ⌘  + E` - show window hints
 
 ## Screen management:
@@ -18,10 +18,18 @@ The following shortcuts are supported:
 - `⌥ + space` - switch between terminal and focussed app
 
 ## Spotlight
-- `⌘  + space` - Alternative for Spotlight, only looks up applications and idea projects
+- `ctrl + ⌥ + ⌘ + space` - Alternative for Spotlight, only looks up applications and idea projects
 
 ## Mouse
-- `shift + ctrl + ⌘  + D` - Show location of mouse
+- `ctrl (2x)` - Show location of mouse
+
+## Zoom
+- `ctrl + ⌥ + ⌘ + Z` - Start Zoom meeting using Personal Meeting Room
+- `ctrl + ⌥ + ⌘ + S` - Join Zoom meeting using Daily Standup Meeting Room
+- `ctrl + ⌥ + ⌘ + A` - Scan Outlook for any Zoom meetings that are about to start. 
+
+If more than one Zoom meeting is found in your calendar, then you can choose one in the chooser.
+
 
 ## Time Machine
 Upon startup, the hammerspoon scripts will exclude some folders from Time Machine backup:
