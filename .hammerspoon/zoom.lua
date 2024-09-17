@@ -2,16 +2,17 @@
 -- example zoom.json file:
 --
 -- {
---     "hotkeys": {
---         "Z": { "id": "123456789", "pwd": "MySecretPwdGoesHere" },
---         "S": { "id": "987654321", "pwd": "YourSecretPwdGoesThere" }
---     },
+--     "meetings": [
+--         { "text": "My Meeting", "id": "123456789", "pwd": "MySecretPwdGoesHere" },
+--         { "text": "Another meeting", "id": "987654321", "pwd": "YourSecretPwdGoesThere" }
+--     ],
 --     "microsoft": {
 --         "tenant": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx",
 --         "clientId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx",
 --         "clientSecret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 --         "redirectUri": "http://localhost:8910/login/oauth2/code/azure",
---         "port": 8910
+--         "port": 8910,
+--         "duration": 300
 --     }
 -- }
 
@@ -24,13 +25,6 @@ function openZoom(m)
 end
 
 zoom = hs.json.read("zoom.json")
-if zoom ~= nil and zoom.hotkeys ~= nil then
-  for k,m in pairs(zoom.hotkeys) do
-    hs.hotkey.bind({"cmd","alt","ctrl"}, k, function() 
-        openZoom(m)
-    end)
-  end
-end
 
 -- Start screen sharing (even when Zoom is not the focused app)
 hs.hotkey.bind({"shift","cmd"}, "S", function()
@@ -54,7 +48,7 @@ if settings == nil then settings = { accessTokenExpiration= 0 } end
 function loadZoomMeetings()
     local now = math.floor(hs.timer.secondsSinceEpoch())
     local startDateTime = os.date("!%Y-%m-%dT%TZ",now) -- now or
-    local endDateTime = os.date("!%Y-%m-%dT%TZ",now+300) -- next 5 minutes
+    local endDateTime = os.date("!%Y-%m-%dT%TZ",now + zoom.microsoft.duration) -- next 5 minutes
     hs.http.asyncGet(
         "https://graph.microsoft.com/v1.0/me/calendar/calendarView?startDateTime=" .. startDateTime .. "&endDateTime=" .. endDateTime,
         {
@@ -62,22 +56,18 @@ function loadZoomMeetings()
         },
         function(status, body, headers)
             local result = hs.json.decode(body)
-            local z = {}
             local count = 0
+            local z = {}
             for _, v in ipairs(result.value) do
                 if v.location.uniqueId and v.location.uniqueId:find("zoom.us/j/") then -- TODO: support Microsoft Teams
                     _, _, label, meetingId, pwd = string.find(v.location.uniqueId, "https://(.*)zoom.us/j/(%d+)?pwd=(.*)")
                     table.insert(z, { id = meetingId, pwd = pwd, text = v.subject, image = hs.image.imageFromAppBundle("us.zoom.xos") })
-                    count = count + 1
                 end
             end
-            if count == 0 then
-                hs.alert("No Zoom at the moment")
-            elseif count == 1 then
-                openZoom(z[1]) -- one meeting found, lets join
-            else
-                hs.chooser.new(openZoom):placeholderText("Select meeting"):choices(z):show()
+            for _, v in ipairs(zoom.meetings) do
+                table.insert(z,v)
             end
+            hs.chooser.new(openZoom):placeholderText("Select meeting"):choices(z):show()
         end
     )
 end
@@ -131,7 +121,7 @@ function oauth2Callback(method,url,headers,body)
     return "Success, you may now close this tab", 200, { ["Content-Type"] = "text/html" }
 end
 
-hs.hotkey.bind({"cmd", "alt","ctrl"}, "A", function()
+hs.hotkey.bind({"cmd", "alt","ctrl"}, "Z", function()
     local now = math.floor(hs.timer.secondsSinceEpoch())
     if settings.accessTokenExpiration == nil or settings.accessTokenExpiration < now then
         if settings.refreshToken ~= nil then
