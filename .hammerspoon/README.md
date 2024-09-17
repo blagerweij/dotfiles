@@ -24,12 +24,7 @@ The following shortcuts are supported:
 - `ctrl (2x)` - Show location of mouse
 
 ## Zoom
-- `ctrl + ⌥ + ⌘ + Z` - Start Zoom meeting using Personal Meeting Room
-- `ctrl + ⌥ + ⌘ + S` - Join Zoom meeting using Daily Standup Meeting Room
-- `ctrl + ⌥ + ⌘ + A` - Scan Outlook for any Zoom meetings that are about to start. 
-
-If more than one Zoom meeting is found in your calendar, then you can choose one in the chooser.
-
+- `ctrl + ⌥ + ⌘ + Z` - Start Zoom. Scans your Outlook calendar for any Zoom meetings that are about to start
 
 ## Time Machine
 Upon startup, the hammerspoon scripts will exclude some folders from Time Machine backup:
