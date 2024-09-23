@@ -21,7 +21,9 @@ sha256 = require("sha256")
 utils = require("utils")
 
 function openZoom(m)
-    hs.urlevent.openURLWithBundle("zoommtg://zoom.us/join?confno=" .. m.id .. "&pwd=" .. m.pwd .. "&zc=0", "us.zoom.xos")
+    if m then
+        hs.urlevent.openURLWithBundle("zoommtg://zoom.us/join?confno=" .. m.id .. "&pwd=" .. m.pwd .. "&zc=0", "us.zoom.xos")
+    end
 end
 
 zoom = hs.json.read("zoom.json")
@@ -35,7 +37,7 @@ hs.hotkey.bind({"shift","cmd"}, "S", function()
 end)
 
 --
--- Binds Cmd-Ctrl-Cmd + 'A' to fetch the next zoom meeting from your Ourlook agenda
+-- Binds Cmd-Ctrl-Cmd + 'Z' to fetch the next zoom meeting from your Ourlook agenda
 -- scan zoom meetings from Outlook, join if meeting scheduled for between now and 5 minutes
 -- Note: requires a valid Client-ID in Azure-AD with a redirect-uri set to http://localhost:8910/login/oauth2/azure/code
 --
@@ -61,6 +63,7 @@ function loadZoomMeetings()
             for _, v in ipairs(result.value) do
                 if v.location.uniqueId and v.location.uniqueId:find("zoom.us/j/") then -- TODO: support Microsoft Teams
                     _, _, label, meetingId, pwd = string.find(v.location.uniqueId, "https://(.*)zoom.us/j/(%d+)?pwd=(.*)")
+
                     table.insert(z, { id = meetingId, pwd = pwd, text = v.subject, image = hs.image.imageFromAppBundle("us.zoom.xos") })
                 end
             end
