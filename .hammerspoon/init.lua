@@ -8,6 +8,7 @@ csh = { "cmd", "ctrl", "shift" }
 --
 -- Imports
 --
+require("ping")
 require("windowmanagement")
 require("terminalswitch")
 require("screenmanagement")
