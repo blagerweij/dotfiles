@@ -22,7 +22,11 @@ utils = require("utils")
 
 function openZoom(m)
     if m then
-        hs.urlevent.openURLWithBundle("zoommtg://zoom.us/join?confno=" .. m.id .. "&pwd=" .. m.pwd .. "&zc=0", "us.zoom.xos")
+        if m.id then
+            hs.urlevent.openURLWithBundle("zoommtg://zoom.us/join?confno=" .. m.id .. "&pwd=" .. m.pwd .. "&zc=0", "us.zoom.xos")
+        elseif m.teamsUrl then
+            hs.urlevent.openURLWithBundle(m.teamsUrl, "com.microsoft.teams2")
+        end
     end
 end
 
@@ -46,10 +50,34 @@ challenge = nil
 settings = hs.settings.get("zoom")
 if settings == nil then settings = { accessTokenExpiration= 0 } end
 
+local epoch = os.time{year=1970, month=1, day=1, hour=0}
+function parse_json_date(json_date)
+  local year, month, day, hour, minute, seconds, offsetsign, offsethour, offsetmin = json_date:match("(%d+)%-(%d+)%-(%d+)%a(%d+)%:(%d+)%:([%d%.]+)([Z%+%- ]?)(%d?%d?)%:?(%d?%d?)")
+  local timestamp = os.time{year = year, month = month, day = day, hour = hour, min = minute, sec = seconds} - epoch
+  local offset = 0
+  if tonumber(offsethour) ~= nil and tonumber(offsetmin) ~= nil then
+    offset = tonumber(offsethour) * 60 + tonumber(offsetmin)
+    if offsetsign == "-" then offset = -offset end
+  end
+  return timestamp - offset * 60
+end
+
+function timezone_offset()
+    local timezone = os.date('%z') -- "+0200"
+    local signum, hours, minutes = timezone:match '([+-])(%d%d)(%d%d)'
+    return (tonumber(signum..hours)*60 + tonumber(signum..minutes)) * 60
+end
+
+function dst_offset()
+    local now = os.time()
+    return os.difftime(now, os.time(os.date("!*t", now)))
+end
+
 -- fetch Zoom meetings from outlook
 function loadZoomMeetings()
-    local now = math.floor(hs.timer.secondsSinceEpoch())
-    local startDateTime = os.date("!%Y-%m-%dT%TZ",now) -- now or
+    local now = os.time()
+    local dstdiff = dst_offset() - timezone_offset()
+    local startDateTime = os.date("!%Y-%m-%dT%TZ",now - 10000) -- NOW OR
     local endDateTime = os.date("!%Y-%m-%dT%TZ",now + zoom.microsoft.duration) -- next 5 minutes
     hs.http.asyncGet(
         "https://graph.microsoft.com/v1.0/me/calendar/calendarView?startDateTime=" .. startDateTime .. "&endDateTime=" .. endDateTime,
@@ -61,10 +89,12 @@ function loadZoomMeetings()
             local count = 0
             local z = {}
             for _, v in ipairs(result.value) do
-                if v.location.uniqueId and v.location.uniqueId:find("zoom.us/j/") then -- TODO: support Microsoft Teams
+                local d = parse_json_date(v.start.dateTime) + dstdiff
+                if v.location.uniqueId and v.location.uniqueId:find("zoom.us/j/") then
                     _, _, label, meetingId, pwd = string.find(v.location.uniqueId, "https://(.*)zoom.us/j/(%d+)?pwd=(.*)")
-
-                    table.insert(z, { id = meetingId, pwd = pwd, text = v.subject, image = hs.image.imageFromAppBundle("us.zoom.xos") })
+                    table.insert(z, { id = meetingId, pwd = pwd, text = v.subject .. " (" .. os.date("%H:%M",d) .. ")", image = hs.image.imageFromAppBundle("us.zoom.xos") })
+                elseif v.onlineMeeting and v.onlineMeeting.joinUrl then
+                    table.insert(z, { teamsUrl = v.onlineMeeting.joinUrl, text = v.subject .. " (" .. os.date("%H:%M",d) .. ")", image = hs.image.imageFromAppBundle("com.microsoft.teams2") })
                 end
             end
             for _, v in ipairs(zoom.meetings) do

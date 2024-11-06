@@ -2,19 +2,19 @@
 -- Screen manipulation
 --
 
--- Move screen to north
+-- Move to next screen
 hs.hotkey.bind(cah, "Up", function()
     local win = hs.window.focusedWindow()
     if win:isFullScreen() then
         win:setFullScreen(false)
     end
-    win:moveOneScreenNorth(false, true, 0)
+    win:moveToScreen(win:screen():next())
 end)
--- Move screen to south
+-- Move to previous screen
 hs.hotkey.bind(cah, "Down", function()
     local win = hs.window.focusedWindow()
     if win:isFullScreen() then
         win:setFullScreen(false)
     end
-    win:moveOneScreenSouth(false, true, 0)
+    win:moveToScreen(win:screen():previous())
 end)

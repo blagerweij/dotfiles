@@ -2,35 +2,7 @@ alias pip=pip3
 alias python=python3
 alias dcu="docker compose up -d"
 alias dcd="docker compose down"
-export GIT_CRYPT_KEY=~/dev/carepay/ssi-platform-modules/.git/git-crypt/keys/default
 
-alias awsclear='unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN'
-alias cpint="k8cfg 456480488550_AdministratorAccess cp-int-prod-eks-3"
-alias cpaetest="k8cfg 578675666392_AdministratorAccess cp-ae-test-eks-2"
-alias cpaeacc="k8cfg 427893637246_AdministratorAccess cp-ae-acc-eks-2"
-alias cpaeuat="k8cfg 088610300590_AdministratorAccess cp-ae-uat-eks-2 me-central-1"
-alias cpaee2e="k8cfg 640664663532_AdministratorAccess cp-ae-e2e-eks-2"
-alias cpketest="k8cfg 272942068046_AdministratorAccess cp-ke-test-eks-3"
-alias cpkentest="k8cfg 093469077649_AdministratorAccess cp-ken-test-eks-2"
-alias cpkenacc="k8cfg 533267425922_AdministratorAccess cp-ken-acc-eks-2"
-alias cpkenprod="k8cfg 851725400099_AdministratorAccess cp-ken-prod-eks-2"
-alias cpngtest="k8cfg 272942068046_AdministratorAccess cp-ng-test-eks-4"
-alias cpaws="export AWS_PROFILE=801942499176_AdministratorAccess"
-alias cpnllab="k8cfg 272942068046_AdministratorAccess cp-nl-lab-eks-2"
-alias cpnllab1="k8cfg 272942068046_AdministratorAccess cp-nl-lab-eks-1"
-alias cpnllab2="k8cfg 272942068046_AdministratorAccess cp-nl-lab-eks-2"
-alias cpnllab3="k8cfg 272942068046_AdministratorAccess cp-nl-lab-eks-3"
-alias cpnllab4="k8cfg 272942068046_AdministratorAccess cp-nl-lab-eks-4"
-alias cpnllab5="k8cfg 272942068046_AdministratorAccess cp-nl-lab-eks-5"
-alias cpnllab6="k8cfg 272942068046_AdministratorAccess cp-nl-lab-eks-6"
-alias cpnllab7="k8cfg 272942068046_AdministratorAccess cp-nl-lab-eks-7"
-alias cpngacc="k8cfg 746033428513_AdministratorAccess cp-ng-acc-eks-3"
-alias cpkeacc="k8cfg 468996848236_AdministratorAccess cp-ke-acc-eks-3"
-alias cpkeprod="k8cfg 222467378042_AdministratorAccess cp-ke-prod-eks-3"
-alias cpngprod="k8cfg 025041747434_AdministratorAccess cp-ng-prod-eks-3"
-alias cpaeprod="k8cfg 099024284159_AdministratorAccess cp-ae-prod-eks-2"
-alias cpxytest="k8cfg 194929118902_AdministratorAccess cp-xy-test-eks-2"
-alias cpaws="export AWS_PROFILE=cp-aws"
 alias kx="kubectx"
 alias kn="kubens"
 
@@ -39,32 +11,8 @@ alias j11='export JAVA_HOME=$(/usr/libexec/java_home -v 11)'
 alias j17='export JAVA_HOME=$(/usr/libexec/java_home -v 17)'
 alias j21='export JAVA_HOME=$(/usr/libexec/java_home -v 21)'
 
-alias dbketest="aws --region eu-west-1 --profile deploy_ke_test secretsmanager get-secret-value --secret-id /cp-ke-test/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbkeprod="aws --region eu-west-1 --profile deploy_ke_prod secretsmanager get-secret-value --secret-id /cp-ke-prod/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbkeacc="aws --region eu-west-1 --profile deploy_ke_acc secretsmanager get-secret-value --secret-id /cp-ke-acc/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbketest="aws --region eu-west-1 --profile deploy_ke_test secretsmanager get-secret-value --secret-id /cp-ke-test/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbngacc="aws --region eu-west-1 --profile deploy_ng_acc secretsmanager get-secret-value --secret-id /cp-ng-acc/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbngprod="aws --region eu-west-1 --profile deploy_ng_prod secretsmanager get-secret-value --secret-id /cp-ng-prod/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbcalc="aws --region ap-southeast-1 --profile deploy_ke_legacy secretsmanager get-secret-value --secret-id /cp-calc-prod/root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbaetest="aws --region eu-west-1 --profile deploy_ae_test secretsmanager get-secret-value --secret-id /cp-ae-test/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbaetestvault="aws --region eu-west-1 --profile deploy_ae_test secretsmanager get-secret-value --secret-id /cp-ae-test/vault/root-db-user | jq -r .SecretString | jq -j .dbPassword | pbcopy"
-alias dbaeacc="aws --region eu-west-1 --profile deploy_ae_acc secretsmanager get-secret-value --secret-id /cp-ae-acc/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbaeaccvault="aws --region eu-west-1 --profile deploy_ae_acc secretsmanager get-secret-value --secret-id /cp-ae-acc/vault/root-db-user | jq -r .SecretString | jq -j .dbPassword | pbcopy"
-alias dbaeuat="aws --region me-central-1 --profile deploy_ae_uat secretsmanager get-secret-value --secret-id /cp-ae-uat/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbaeuatvault="aws --region eu-west-1 --profile deploy_ae_uat secretsmanager get-secret-value --secret-id /cp-ae-uat/vault/root-db-user | jq -r .SecretString | jq -j .dbPassword | pbcopy"
-alias dbaeprod="aws --region me-central-1 --profile deploy_ae_prod secretsmanager get-secret-value --secret-id /cp-ae-prod/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbaeprodvault="aws --region eu-west-1 --profile deploy_ae_prod secretsmanager get-secret-value --secret-id /cp-ae-prod/vault/root-db-user | jq -r .SecretString | jq -j .dbPassword | pbcopy"
-alias dbkentest="aws --region eu-west-1 --profile deploy_ken_test secretsmanager get-secret-value --secret-id /cp-ken-test/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbkentestvault="aws --region eu-west-1 --profile deploy_ken_test secretsmanager get-secret-value --secret-id /cp-ken-test/vault/root-db-user | jq -r .SecretString | jq -j .dbPassword | pbcopy"
-alias dbkenacc="aws --region eu-west-1 --profile deploy_ken_acc secretsmanager get-secret-value --secret-id /cp-ken-acc/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbkenaccvault="aws --region eu-west-1 --profile deploy_ken_acc secretsmanager get-secret-value --secret-id /cp-ken-acc/vault/root-db-user | jq -r .SecretString | jq -j .dbPassword | pbcopy"
-alias dbkenprod="aws --region eu-west-1 --profile deploy_ken_prod secretsmanager get-secret-value --secret-id /cp-ken-prod/shared-db-root/secret | jq -r .SecretString | jq -j .password | pbcopy"
-alias dbkenprodvault="aws --region eu-west-1 --profile deploy_ken_prod secretsmanager get-secret-value --secret-id /cp-ken-prod/vault/root-db-user | jq -r .SecretString | jq -j .dbPassword | pbcopy"
-
-# alias git-crypt-unlock='GIT_CRYPT_KEY=~/dev/ssi-platform-modules/.git/git-crypt/keys/default ~/cp-terraform'
 alias dot='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-alias dotsecret='git --git-dir=$HOME/.secretfiles --work-tree=$HOME'
-# alias pvault='docker run --rm -i --add-host="host.docker.internal:host-gateway" -v $(pwd):/pwd -w /pwd piiano/pvault-cli'
+alias secrit='git --git-dir=$HOME/.secretfiles --work-tree=$HOME'
 
 # Use homebrew vi, not the default MacOS one
 alias vi=/opt/homebrew/bin/vi
