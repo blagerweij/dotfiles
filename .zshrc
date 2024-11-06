@@ -75,6 +75,7 @@ zstyle ':omz:plugins:nvm' autoload yes
 source $ZSH/oh-my-zsh.sh
 source ~/.aliases
 source ~/.functions
+source ~/.carepay
 
 source $ZSH/oh-my-zsh.sh
 
