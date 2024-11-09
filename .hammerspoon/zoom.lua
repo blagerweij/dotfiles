@@ -77,7 +77,7 @@ end
 function loadZoomMeetings()
     local now = os.time()
     local dstdiff = dst_offset() - timezone_offset()
-    local startDateTime = os.date("!%Y-%m-%dT%TZ",now - 10000) -- NOW OR
+    local startDateTime = os.date("!%Y-%m-%dT%TZ",now) -- NOW OR
     local endDateTime = os.date("!%Y-%m-%dT%TZ",now + zoom.microsoft.duration) -- next 5 minutes
     hs.http.asyncGet(
         "https://graph.microsoft.com/v1.0/me/calendar/calendarView?startDateTime=" .. startDateTime .. "&endDateTime=" .. endDateTime,
