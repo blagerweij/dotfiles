@@ -85,6 +85,7 @@ function loadZoomMeetings()
             ["Authorization"] = "Bearer " .. settings.accessToken
         },
         function(status, body, headers)
+            print(body)
             local result = hs.json.decode(body)
             local count = 0
             local z = {}
@@ -121,7 +122,10 @@ end
 
 -- callback for parsing HTTP response from token endpoint
 function parseTokens(status,body,headers)
-    if status ~= 200 then return end
+    if status ~= 200 then 
+        print(body)
+        return
+    end
     local response = hs.json.decode(body)
     settings.accessToken = response.access_token
     settings.refeshToken = response.refresh_token
@@ -141,6 +145,7 @@ function oauth2Callback(method,url,headers,body)
         "https://login.microsoftonline.com/" .. zoom.microsoft.tenant .. "/oauth2/v2.0/token",
         utils:formencode({ 
             client_id = zoom.microsoft.clientId,
+            client_secret = zoom.microsoft.clientSecret,
             scope = _SCOPE,
             code = params.code,
             redirect_uri = zoom.microsoft.redirectUri,
@@ -162,6 +167,7 @@ hs.hotkey.bind({"cmd", "alt","ctrl"}, "Z", function()
                 "https://login.microsoftonline.com/" .. zoom.microsoft.tenant .. "/oauth2/v2.0/token",
                 utils:formencode({ 
                     client_id = zoom.microsoft.clientId,
+                    client_secret = zoom.microsoft.clientSecret,
                     scope = _SCOPE,
                     redirect_uri = zoom.microsoft.redirectUri,
                     grant_type = "refresh_token",

@@ -4,8 +4,8 @@ allprojects {
         if (dcExt) {
             dcExt.stopContainers = false
             dcExt.noRecreate = true
-            dcExt.executable.set("/usr/local/bin/docker-compose")
-            dcExt.dockerExecutable.set("/usr/local/bin/docker")
+            dcExt.executable.set("/opt/homebrew/bin/docker-compose")
+            dcExt.dockerExecutable.set("/opt/homebrew/bin/docker")
             logger.info("'stopContainers' property of 'dockerCompose' extension set to 'false' from 'init.gradle' script")
         }
     }

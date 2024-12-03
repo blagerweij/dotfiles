@@ -48,7 +48,7 @@ function git-crypt-unlock {
 }
 
 function listPublicIps {
-  for profile in cp-int cp-aws ke-test ke-acc ke-prod ng-acc ng-prod ae-test ae-acc; do
+  for profile in cp-int cp-aws ke-test ke-acc ke-prod ae-test ae-acc ae-uat ae-prod ken-test ken-acc ken-prod; do
     echo "\"$profile\": {"
     for region in eu-west-1 ap-southeast-1; do
       echo "\"$region\": {"
