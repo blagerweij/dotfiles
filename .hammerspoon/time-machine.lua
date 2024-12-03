@@ -2,6 +2,7 @@ local rootDir = "~/dev"
 
 -- exclude a folder from time-machine
 function exclude(path) 
+    print("Excluding " .. path .. " from time machine")
     hs.fs.xattr.set(path, "com_apple_backup_excludeItem", "com.apple.backupd")
 end
 
@@ -37,20 +38,31 @@ for _,d in ipairs(exclude_dirs) do
     exclude(d)
 end
 
--- exclude project output files
-local keys={}
-for key,_ in pairs(exclude_outputs) do
-    table.insert(keys, key)
+-- recursively travel the dev folder
+function traverse(path)
+    local subdirs = {}
+    for name in hs.fs.dir(path) do
+        local mode = hs.fs.symlinkAttributes(path .. "/" .. name, "mode")
+        if mode == "file" then
+            local output = exclude_outputs[name]
+            if output ~= nil then
+                local buildDir = path .. "/" .. output
+                if hs.fs.symlinkAttributes(buildDir, "mode") == "directory" then
+                    exclude(buildDir)
+                end
+                return
+            end
+        elseif mode == "directory" and name ~= "." and name ~= ".." then
+            table.insert(subdirs, name)
+        end
+    end
+    for _, name in pairs(subdirs) do
+        traverse(path .. "/" .. name)
+    end
 end
 
-local bgtask = hs.timer.delayed.new(10, function()
-  for f in hs.execute("find " .. rootDir .. " -type f \\( -name " .. table.concat(keys, " -o -name ") .. " \\)"):gmatch("[^\n]+") do
-      local i = string.find(string.reverse(f), "/")
-      local name = string.sub(f, string.len(f) - i + 2, -1)
-      local dir = string.sub(f, 1, -i) .. exclude_outputs[name]
-      if hs.fs.attributes(dir, "mode") == "directory" then
-          exclude(dir)
-      end
-  end
+-- run every day
+hs.timer.doEvery(60*60*24, function()
+    traverse(rootDir)
 end)
--- bgtask:start()
+
