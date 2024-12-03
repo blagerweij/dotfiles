@@ -9,6 +9,7 @@
 [core]
     filemode = false
     autocrlf = input
+	compression = 0
 
 [color]
     ui = auto
@@ -17,11 +18,13 @@
     autosetupmerge = true
 
 [alias]
-    co = checkout
-    cob = checkout -b
-    del = branch -D
-    st = status
-    br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
-    undo = reset HEAD~1 --mixed
+    co    = checkout
+    cob   = checkout -b
+    del   = branch -D
+    st    = status
+    br    = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+    undo  = reset HEAD~1 --mixed
     ahead = log --stat --oneline @{u}..
     up = pull --rebase --prune --autostash
+    mb =  !git symbolic-ref refs/remotes/origin/HEAD | cut -d'/' -f4
+    upm = !git up origin $(git mb)
