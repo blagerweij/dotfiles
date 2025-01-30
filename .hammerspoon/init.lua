@@ -17,6 +17,7 @@ require("mouse")
 require("time-machine")
 require("vpn")
 require("zoom")
+require("mute")
 
 hs.alert.show("Hammerspoon loaded")
 
