@@ -23,7 +23,13 @@ utils = require("utils")
 function openZoom(m)
     if m then
         if m.id then
-            hs.urlevent.openURLWithBundle("zoommtg://zoom.us/join?confno=" .. m.id .. "&pwd=" .. m.pwd .. "&zc=0", "us.zoom.xos")
+            if m.pwd then
+                hs.urlevent.openURLWithBundle("zoommtg://zoom.us/join?confno=" .. m.id .. "&pwd=" .. m.pwd .. "&zc=0", "us.zoom.xos")
+            else
+                hs.urlevent.openURLWithBundle("zoommtg://zoom.us/join?confno=" .. m.id .. "&zc=0", "us.zoom.xos")
+            end
+        elseif m.joinUrl then
+            hs.urlevent.openURL(m.joinUrl)
         elseif m.teamsUrl then
             hs.urlevent.openURLWithBundle(m.teamsUrl, "com.microsoft.teams2")
         end
@@ -76,7 +82,7 @@ end
 -- fetch Zoom meetings from outlook
 function loadZoomMeetings()
     local now = os.time()
-    local dstdiff = dst_offset() - timezone_offset()
+    local dstdiff = timezone_offset() - dst_offset()
     local startDateTime = os.date("!%Y-%m-%dT%TZ",now) -- NOW OR
     local endDateTime = os.date("!%Y-%m-%dT%TZ",now + zoom.microsoft.duration) -- next 5 minutes
     hs.http.asyncGet(
@@ -92,8 +98,11 @@ function loadZoomMeetings()
             for _, v in ipairs(result.value) do
                 local d = parse_json_date(v.start.dateTime) + dstdiff
                 if v.location.uniqueId and v.location.uniqueId:find("zoom.us/j/") then
-                    _, _, label, meetingId, pwd = string.find(v.location.uniqueId, "https://(.*)zoom.us/j/(%d+)?pwd=(.*)")
+                    _, _, label, meetingId = string.find(v.location.uniqueId, "https://(.*)zoom.us/j/(%d+)")
+                    _, _, _, _, pwd = string.find(v.location.uniqueId, "https://(.*)zoom.us/j/(%d+)?pwd=(%w+)")
                     table.insert(z, { id = meetingId, pwd = pwd, text = v.subject .. " (" .. os.date("%H:%M",d) .. ")", image = hs.image.imageFromAppBundle("us.zoom.xos") })
+                elseif v.location.uniqueId and v.location.uniqueId:find("zoom.us/my/") then
+                    table.insert(z, { joinUrl = v.location.uniqueId, text = v.subject .. " (" .. os.date("%H:%M",d) .. ")", image = hs.image.imageFromAppBundle("us.zoom.xos") })
                 elseif v.onlineMeeting and v.onlineMeeting.joinUrl then
                     table.insert(z, { teamsUrl = v.onlineMeeting.joinUrl, text = v.subject .. " (" .. os.date("%H:%M",d) .. ")", image = hs.image.imageFromAppBundle("com.microsoft.teams2") })
                 end

@@ -3,7 +3,7 @@ local rootDir = "~/dev"
 -- exclude a folder from time-machine
 function exclude(path) 
     print("Excluding " .. path .. " from time machine")
-    hs.fs.xattr.set(path, "com_apple_backup_excludeItem", "com.apple.backupd")
+    hs.fs.xattr.set(path, "com.apple.metadata:com_apple_backup_excludeItem", "com.apple.backupd")
 end
 
 -- list of folders to exclude
@@ -11,10 +11,14 @@ local exclude_dirs = {
     "~/Downloads",
     "~/go",
     "~/Library/Containers",
+    "~/Library/Group Containers",
     "~/Library/Application Support",
+    "~/Library/Developer",
+    "~/Library/Arduino15",
     "~/.cache",
     "~/.docker",
     "~/.gradle",
+    "~/.ollama",
     "~/.m2",
     "~/.npm",
     "~/.nvm",
@@ -62,7 +66,7 @@ function traverse(path)
 end
 
 -- run every day
-hs.timer.doEvery(60*60*24, function()
+-- hs.timer.doEvery(60*60*24, function()
     traverse(rootDir)
-end)
+-- end)
 
