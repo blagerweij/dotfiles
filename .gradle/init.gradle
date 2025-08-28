@@ -1,4 +1,38 @@
+/*
+initscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.liftric.dependency-track-companion-plugin:com.liftric.dependency-track-companion-plugin.gradle.plugin:1.4.0"
+        classpath "org.cyclonedx.bom:org.cyclonedx.bom.gradle.plugin:2.2.0"
+        classpath "org.cyclonedx:cyclonedx-gradle-plugin:2.2.0"
+    }
+}
+*/
 allprojects {
+/*
+    apply plugin: 'java' 
+    apply plugin: org.cyclonedx.gradle.CycloneDxPlugin //  id: 'org.cyclonedx.bom'
+    apply plugin: com.liftric.dtcp.DepTrackCompanionPlugin
+    cyclonedxBom {
+        destination = file("build/reports")
+        outputName = "bom"
+        outputFormat = "json"
+    }
+
+    dependencyTrackCompanion {
+        url = "https://dependencytrack.ken-test.mtiba.dev"
+        apiKey = "***REMOVED***"
+        autoCreate = true
+        projectName = project.name
+        projectVersion = project.version
+        parentName = 'carepay'
+    }
+*/
+
     afterEvaluate {
         def dcExt = getExtensions().findByName('dockerCompose')
         if (dcExt) {
@@ -9,6 +43,7 @@ allprojects {
             logger.info("'stopContainers' property of 'dockerCompose' extension set to 'false' from 'init.gradle' script")
         }
     }
+
     beforeEvaluate {
         // hack to silence AWS SDK profile warnings
         def ctx = org.slf4j.LoggerFactory.getILoggerFactory()
