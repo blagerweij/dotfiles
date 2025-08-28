@@ -97,9 +97,9 @@ To add sensitive files, Update the .gitattributes file in your home-dir to speci
 
 ## Install all software packages
 
-Remember Homebrew, the very convenient package manager for MacOS ? On a fresh machine, you can install all software stored in the 'Brewfile' :
+Remember Homebrew, the very convenient package manager for MacOS ? On a fresh machine, you can install all software stored in the '~/.homebrew/Brewfile' :
 
-    brew bundle install
+    brew bundle install --global
 
 ## Visual Studio Code extensions
 
