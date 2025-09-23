@@ -15,34 +15,35 @@ local intellijLibraryVersion=string.sub(intellijInfo.CFBundleShortVersionString,
 
 local chooseApplication
 
-function buildApplicationChoices(directory)
-    local applications = util:split(hs.execute("ls " .. directory), "\n")
+function buildApplicationChoices(apps, directory)
+    -- local applications = util:split(hs.execute("ls '" .. directory) .. "'", "\n")
 
-    local result = {}
-    for _, application in pairs(applications) do
-        table.insert(result, {
-            text = string.gsub(application, ".app", ""),
-            uuid = application,
-            image = hs.image.imageFromMediaFile(directory .. "/" .. application)
-        })
+    for application in io.popen("ls \"" .. directory .. "\""):lines() do
+        if application:sub(-4,-1) == ".app" then
+            table.insert(apps, {
+                text = string.gsub(application, ".app", ""),
+                uuid = application,
+                image = hs.image.imageFromMediaFile(directory .. "/" .. application)
+            })
+        else
+            buildApplicationChoices(apps, directory .. "/" .. application)
+        end
     end
-    return result
 end
 
 function initializeApplicationChoices()
     local applicationChoices = { finderApplication }
 
-    util:addToTable(applicationChoices, buildApplicationChoices("/Applications"))
-    util:addToTable(applicationChoices, buildApplicationChoices("/System/Applications"))
-    util:addToTable(applicationChoices, buildApplicationChoices("/System/Applications/Utilities"))
-    util:addToTable(applicationChoices, findIntellijProjects())
+    buildApplicationChoices(applicationChoices, "/Applications")
+    buildApplicationChoices(applicationChoices, "/System/Applications")
+    findIntellijProjects(applicationChoices)
+    util:reverse(applicationChoices)
     table.insert(applicationChoices, reloadApplication)
 
     return applicationChoices
 end
 
-function findIntellijProjects()
-    local projects = {}
+function findIntellijProjects(apps)
     local path = hs.fs.pathToAbsolute("~/Library/Application Support/JetBrains/IntellijIdea" .. intellijLibraryVersion .. "/options/recentProjects.xml")
     if not path then
         return {}
@@ -55,15 +56,13 @@ function findIntellijProjects()
             path = os.getenv("HOME") .. path:sub(12)
         end
         local projectName = string.gsub(path, path:match(".*/"), "")
-        table.insert(projects, {
+        table.insert(apps, {
             text = projectName,
             uuid = path,
             idea = true,
             image = hs.image.imageFromAppBundle("com.jetbrains.intellij")
         })
     end
-    util:reverse(projects)
-    return projects
 end
 
 function onCompletionHandler(result)
