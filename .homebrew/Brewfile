@@ -120,6 +120,7 @@ cask "surfshark"
 cask "temurin@11"
 cask "temurin@17"
 cask "temurin@21"
+cask "temurin@25"
 cask "temurin@8"
 cask "transmission"
 cask "visual-studio-code"
@@ -128,6 +129,18 @@ cask "winbox"
 cask "zap"
 cask "zed"
 cask "zoom"
+mas "AdBlock Pro", id: 1018301773
+mas "Bitwarden", id: 1352778147
+mas "Discovery", id: 1381004916
+mas "GarageBand", id: 682658836
+mas "iMovie", id: 408981434
+mas "Keynote", id: 409183694
+mas "Microsoft Remote Desktop", id: 1295203466
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "Slack", id: 803453959
+mas "The Unarchiver", id: 425424353
+mas "Xcode", id: 497799835
 vscode "angular.ng-template"
 vscode "dbaeumer.vscode-eslint"
 vscode "eamodio.gitlens"
