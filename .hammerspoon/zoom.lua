@@ -25,13 +25,17 @@ function openZoom(m)
         if m.id then
             if m.pwd then
                 hs.urlevent.openURLWithBundle("zoommtg://zoom.us/join?confno=" .. m.id .. "&pwd=" .. m.pwd .. "&zc=0", "us.zoom.xos")
+                hs.pasteboard.setContents("https://zoom.us/join?confno=" .. m.id .. "&pwd=" .. m.pwd .. "&zc=0")
             else
                 hs.urlevent.openURLWithBundle("zoommtg://zoom.us/join?confno=" .. m.id .. "&zc=0", "us.zoom.xos")
+                hs.pasteboard.setContents("https://zoom.us/join?confno=" .. m.id .. "&zc=0")
             end
         elseif m.joinUrl then
             hs.urlevent.openURL(m.joinUrl)
+            hs.pasteboard.setContents(m.joinUrl)
         elseif m.teamsUrl then
             hs.urlevent.openURLWithBundle(m.teamsUrl, "com.microsoft.teams2")
+            hs.pasteboard.setContents(m.teamsUrl)
         end
     end
 end
