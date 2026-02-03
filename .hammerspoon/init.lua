@@ -18,6 +18,8 @@ require("mouse")
 require("vpn")
 require("zoom")
 require("mute")
+require("spotify")
+require("reminder")
 
 hs.alert.show("Hammerspoon loaded")
 
