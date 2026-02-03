@@ -70,7 +70,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git kubectl docker docker-compose nvm)
+plugins=(git kubectl docker docker-compose nvm fluxcd talosctl)
 zstyle ':omz:plugins:nvm' autoload yes
 source $ZSH/oh-my-zsh.sh
 source ~/.aliases
@@ -120,3 +120,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
+
+# Added by Antigravity
+export PATH="/Users/blagerweij/.antigravity/antigravity/bin:$PATH"

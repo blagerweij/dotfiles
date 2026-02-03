@@ -53,4 +53,5 @@ function toggleMicMute()
     end
 end
 
-hs.hotkey.bind({ "ctrl" }, "space", toggleMicMute)
+hs.hotkey.bind({ "ctrl", "alt" }, "space", toggleMicMute)
+hs.hotkey.bind({ }, "F20", toggleMicMute)
