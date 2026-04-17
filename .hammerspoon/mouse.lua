@@ -1,6 +1,7 @@
 -- Find my mouse pointer
 
 firstDown = 0
+secondDown = 0
 ctrlWasDown = false
 
 pingResponses = {
@@ -18,7 +19,9 @@ tap = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function(event)
             ctrlWasDown = true
 
             local now = hs.timer.absoluteTime()
-            if firstDown + 500000000 > now and mouseCircle == nil then
+            if secondDown + 1000000000 > now and mouseCircle == nil then
+                secondDown = 0
+                firstDown = 0
                 local p = hs.mouse.absolutePosition()
                 local mouseCircle = hs.canvas.new({x=p.x-200,y=p.y-200,w=400,h=400})
                 local mouseCircleSize = 100
@@ -34,8 +37,12 @@ tap = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function(event)
                         end
                     end
                 end)
+            elseif firstDown + 1000000000 > now then
+                secondDown = now
+            else
+                secondDown = 0
+                firstDown = now
             end
-            firstDown = now
         end
     else
         ctrlWasDown = false
