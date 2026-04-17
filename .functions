@@ -91,3 +91,8 @@ EOF
   kubectl wait --for=condition=Ready pod/forwarder-$suffix 2>&1 >/dev/null
   kubectl port-forward pod/forwarder-$suffix $sport:$dport
 }
+
+function cleanup() {
+  find . \( -name node_modules -o -name .terraform \) -type d -prune -exec rm -rf '{}' + 
+  find . -name build.gradle -type f -prune -exec dirname '{}' \; | while read -r dir; do rm -rf "$dir/build"; done
+}

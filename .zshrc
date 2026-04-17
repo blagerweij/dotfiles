@@ -123,3 +123,8 @@ export NVM_DIR="$HOME/.nvm"
 
 # Added by Antigravity
 export PATH="/Users/blagerweij/.antigravity/antigravity/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/blagerweij/.lmstudio/bin"
+# End of LM Studio CLI section
+
