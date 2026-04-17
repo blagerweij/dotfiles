@@ -1,3 +1,5 @@
+allprojects {
+
     afterEvaluate {
         def dcExt = getExtensions().findByName('dockerCompose')
         if (dcExt) {
