@@ -48,6 +48,7 @@ function git-crypt-unlock {
 }
 
 function listPublicIps {
+  echo "{"
   for profile in cp-int cp-aws ke-test ke-acc ke-prod ae-test ae-acc ae-uat ae-prod ken-test ken-acc ken-prod; do
     echo "\"$profile\": {"
     for region in eu-west-1 ap-southeast-1; do
@@ -64,6 +65,48 @@ function listPublicIps {
     echo "}"
   done
   echo "}"
+}
+
+function listPrivateIps {
+  echo "{"
+  for profile in cp-int cp-aws ke-test ke-acc ke-prod ae-test ae-acc ae-uat ae-prod ken-test ken-acc ken-prod; do
+    echo "\"$profile\": {"
+    for region in eu-west-1 ap-southeast-1; do
+      echo "\"$region\": {"
+      echo -n '"load-balancers": '
+      aws --profile $profile --region $region elbv2 describe-load-balancers --output json | jq '[.LoadBalancers[] | select(.Scheme == "internal") | .DNSName]'
+      echo -n '"ec2-instances": '
+      aws --profile $profile --region $region ec2 describe-instances --output json | jq '[.Reservations[].Instances[] | select(.PrivateIpAddress) | .PrivateIpAddress]'
+      echo -n '"rds": '
+      aws --profile $profile --region $region rds describe-db-instances --output json | jq '[.DBInstances[].Endpoint.Address]'
+      echo -n '"network-interfaces": '
+      aws --profile $profile --region $region ec2 describe-network-interfaces --output json | jq '[.NetworkInterfaces[].PrivateIpAddress]'
+    done
+    echo "}"
+  done
+  echo "}"
+}
+
+function ec2list {
+  for profile in cp-int cp-aws ke-test ke-acc ke-prod ae-test ae-acc ae-uat ae-prod ken-test ken-acc ken-prod; do
+    for region in eu-west-1 ap-southeast-1; do
+      echo "=== Profile: $profile | Region: $region ==="
+      aws --profile "$profile" --region "$region" ec2 describe-instances \
+        --output json \
+        --query 'Reservations[].Instances[].[
+          InstanceId,
+          InstanceType,
+          State.Name,
+          PrivateIpAddress,
+          PublicIpAddress,
+          Tags[?Key==`Name`]|[0].Value,
+          LaunchTime
+        ]' \
+        | jq -r '.[] | @tsv' \
+        | column -t -s $'\t'
+      echo ""
+    done
+  done
 }
 
 function k8tunnel () {
