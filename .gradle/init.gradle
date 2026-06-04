@@ -19,8 +19,6 @@ allprojects {
         apply plugin: org.sonatype.gradle.plugins.scan.ScanPlugin
 
         ossIndexAudit {
-          username = "admin@carepay.com"
-          password = "***REMOVED***"
           failOnDetection = false
         }
     }
