@@ -1,3 +1,12 @@
+initscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.sonatype.gradle.plugins:scan-gradle-plugin:3.1.5")
+    }
+}
+
 allprojects {
     afterEvaluate {
         def dcExt = getExtensions().findByName('dockerCompose')
@@ -5,6 +14,14 @@ allprojects {
             dcExt.stopContainers = false
             dcExt.noRecreate = true
             logger.info("'stopContainers' property of 'dockerCompose' extension set to 'false' from 'init.gradle' script")
+        }
+
+        apply plugin: org.sonatype.gradle.plugins.scan.ScanPlugin
+
+        ossIndexAudit {
+          username = "admin@carepay.com"
+          password = "***REMOVED***"
+          failOnDetection = false
         }
     }
 }
