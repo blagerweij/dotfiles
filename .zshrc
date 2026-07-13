@@ -128,3 +128,6 @@ export PATH="/Users/blagerweij/.antigravity/antigravity/bin:$PATH"
 export PATH="$PATH:/Users/blagerweij/.lmstudio/bin"
 # End of LM Studio CLI section
 
+
+# Added by Antigravity IDE
+export PATH="/Users/blagerweij/.antigravity-ide/antigravity-ide/bin:$PATH"
