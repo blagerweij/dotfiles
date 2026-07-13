@@ -25,6 +25,12 @@
     br    = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
     undo  = reset HEAD~1 --mixed
     ahead = log --stat --oneline @{u}..
-    up = pull --rebase --prune --autostash
-    mb =  !git symbolic-ref refs/remotes/origin/HEAD | cut -d'/' -f4
-    upm = !git up origin $(git mb)
+    up    = pull --rebase --prune --autostash
+    mb    =  !git symbolic-ref refs/remotes/origin/HEAD | cut -d'/' -f4
+    upm   = !git up origin $(git mb)
+
+[includeIf "hasconfig:remote.*.url:git@github.com:team-carepay/**"]
+    path = ~/.gitconfig.carepay
+
+[url "git@github.work:team-carepay/"]
+	insteadOf = git@github.com:team-carepay/
