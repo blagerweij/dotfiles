@@ -2,9 +2,9 @@ initscript {
     repositories {
         mavenCentral()
     }
-    dependencies {
-        classpath("org.sonatype.gradle.plugins:scan-gradle-plugin:3.1.5")
-    }
+//    dependencies {
+//        classpath("org.sonatype.gradle.plugins:scan-gradle-plugin:3.1.5")
+//    }
 }
 
 allprojects {
@@ -13,13 +13,14 @@ allprojects {
         if (dcExt) {
             dcExt.stopContainers = false
             dcExt.noRecreate = true
+//            dcExt.dockerExecutable = "/opt/homebrew/bin/docker"
             logger.info("'stopContainers' property of 'dockerCompose' extension set to 'false' from 'init.gradle' script")
         }
 
-        apply plugin: org.sonatype.gradle.plugins.scan.ScanPlugin
+//        apply plugin: org.sonatype.gradle.plugins.scan.ScanPlugin
 
-        ossIndexAudit {
-          failOnDetection = false
-        }
+//        ossIndexAudit {
+//          failOnDetection = false
+//        }
     }
 }

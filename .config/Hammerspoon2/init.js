@@ -18,6 +18,7 @@ const keepAlive = [
     require("./mute"),
     require("./spotify"),
     require("./reminder"),
+    require("./presentify"),
 ]
 
 

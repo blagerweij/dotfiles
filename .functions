@@ -136,6 +136,10 @@ EOF
 }
 
 function cleanup() {
-  find . \( -name node_modules -o -name .terraform \) -type d -prune -exec rm -rf '{}' + 
-  find . -name build.gradle -type f -prune -exec dirname '{}' \; | while read -r dir; do rm -rf "$dir/build"; done
+  find ~/dev \( -name node_modules -o -name .terraform \) -type d -exec rm -rf {} + -prune
+  find ~/dev \( -name node_modules -o -name .terraform \) -prune -o \( -name build.gradle -o -name package.json \) -type f -exec sh -c 'for f; do rm -rf "$(dirname "$f")/build"; done' _ {} +
+  docker ps -aq | xargs -r docker rm -f
+  docker system prune -a -f --volumes
+  rm -rf ~/.gradle/caches ~/.gradle/wrapper
+  go clean -cache -modcache
 }

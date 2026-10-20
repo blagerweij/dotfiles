@@ -33,4 +33,4 @@
     path = ~/.gitconfig.carepay
 
 [url "git@github.work:team-carepay/"]
-	insteadOf = git@github.com:team-carepay/
+    insteadOf = git@github.com:team-carepay/

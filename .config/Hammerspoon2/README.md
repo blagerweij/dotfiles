@@ -21,5 +21,8 @@ Port of `~/.hammerspoon` to [Hammerspoon 2](https://cmsj.github.io/Hammerspoon2/
 - `ctrl + ⌥ + ⌘ + R` - new reminder
 - `ctrl + ⌥ + ⌘ + Z` - join a Zoom/Teams meeting from your Outlook calendar (needs `zoom.json`)
 - `⇧ + ⌘ + S` - start Zoom screen share
+- `ctrl + A` - draw on screen with the left mouse button (`ctrl + A` / `Esc` to stop). While drawing: `F` free draw, `L` line, `R` rectangle, `O` ellipse, `1`-`6` red/green/blue/yellow/white/black
+- `ctrl + S` - spotlight: dim the screen except around the mouse (`ctrl + S` again to stop)
+- `ctrl + L` - highlight: circle around the mouse cursor (`ctrl + L` again to stop)
 
 `time-machine.js` (disabled in `init.js`) excludes caches and build folders from Time Machine.

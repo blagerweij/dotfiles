@@ -104,7 +104,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-export PATH=$PATH:/opt/homebrew/bin
+export PATH=/opt/homebrew/bin:$PATH
 autoload -U +X compinit && compinit
 autoload bashcompinit && bashcompinit
 complete -C '/opt/homebrew/bin/aws_completer' aws
@@ -120,6 +120,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
+export AWS_EC2_METADATA_DISABLED=true
 
 # Added by Antigravity
 export PATH="/Users/blagerweij/.antigravity/antigravity/bin:$PATH"
