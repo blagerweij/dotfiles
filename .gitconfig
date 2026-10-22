@@ -9,7 +9,8 @@
 [core]
     filemode = false
     autocrlf = input
-	compression = 0
+    compression = 0
+    hooksPath = /Users/blagerweij/.git-hooks
 
 [color]
     ui = auto

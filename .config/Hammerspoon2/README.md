@@ -17,6 +17,7 @@ Port of `~/.hammerspoon` to [Hammerspoon 2](https://cmsj.github.io/Hammerspoon2/
 - `ctrl + ⌥ + ⌘ + space` - app / IntelliJ project launcher
 - `ctrl (2x)` - show location of mouse (rings show ping to 8.8.8.8)
 - `ctrl + ⌥ + space` / `F20` - toggle microphone mute (also Zoom / Teams)
+- `ctrl + ⌥ + ⌘ + K` - switch to a Slack channel from any app
 - `ctrl + ⌥ + ⌘ + P` - Spotify play/pause
 - `ctrl + ⌥ + ⌘ + R` - new reminder
 - `ctrl + ⌥ + ⌘ + Z` - join a Zoom/Teams meeting from your Outlook calendar (needs `zoom.json`)
