@@ -10,11 +10,11 @@ const gridset = (x, y, w, h) => () => {
 
 module.exports = [
     // Entire screen
-    hs.hotkey.bind(["alt", "ctrl"], "return", gridset(0, 0, 1, 1)),
+    hs.hotkey.bind(["cmd", "alt"], "up", gridset(0, 0, 1, 1)),
     // Left 1/2 of the screen
-    hs.hotkey.bind(cah, "left", gridset(0, 0, 0.5, 1)),
+    hs.hotkey.bind(["cmd", "alt"], "left", gridset(0, 0, 0.5, 1)),
     // Right 1/2 of the screen
-    hs.hotkey.bind(cah, "right", gridset(0.5, 0, 0.5, 1)),
+    hs.hotkey.bind(["cmd", "alt"], "right", gridset(0.5, 0, 0.5, 1)),
     // Toggle Fullscreen mode
     hs.hotkey.bind(cah, "m", () => hs.window.focusedWindow()?.toggleFullscreen()),
 ]

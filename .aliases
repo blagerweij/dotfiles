@@ -17,3 +17,4 @@ alias secrit='git --git-dir=$HOME/.secretfiles --work-tree=$HOME'
 
 # Use homebrew vi, not the default MacOS one
 alias vi=/opt/homebrew/bin/vi
+alias code='open -a "Visual Studio Code"'

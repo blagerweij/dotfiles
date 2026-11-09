@@ -13,7 +13,7 @@ const moveTo = (pick) => () => {
 
 module.exports = [
     // Move to next screen
-    hs.hotkey.bind(cah, "up", moveTo(s => s.next())),
+    hs.hotkey.bind(cah, "right", moveTo(s => s.next())),
     // Move to previous screen
-    hs.hotkey.bind(cah, "down", moveTo(s => s.previous())),
+    hs.hotkey.bind(cah, "left", moveTo(s => s.previous())),
 ]
